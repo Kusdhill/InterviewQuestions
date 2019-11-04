@@ -1,28 +1,31 @@
 class MinimumInRotatedSortedArray{
 	public static int findMin(int[] nums){
-		if(nums.length<2){
+		
+		int n = nums.length;
+		if(n<1){
+			return -1;
+		}
+		if(n<2){
 			return nums[0];
 		}
-		
+
 		int left = 0;
-		int right = nums.length-1;
-		int min = Integer.MAX_VALUE;
-		
+		int right = n-1;
+
 		while(left<right){
-			if(nums[right]<nums[left]){
-				min = Math.min(nums[right], min);
-				left+=1;
+			int mid = left+(right-left)/2;
+
+			if(nums[mid]<nums[right]){
+				right = mid;
 			}else{
-				min = Math.min(nums[left], min);
-				right-=1;
+				left = mid+1;
 			}
 		}
-		
-		return min;
+		return nums[left];
 	}
 
 	public static void main(String args[]){
-		int[] nums = {3,4,5,1,2};
+		int[] nums = {1,2,3};
 		System.out.println(findMin(nums));
 	}
 }
