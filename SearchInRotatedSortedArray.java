@@ -1,48 +1,40 @@
 class SearchInRotatedSortedArray{
 	public static int search(int[] nums, int target){
 
-		// set left and right pointers
-		// get midpoint in array
-		// if left mid or right == target, return index
-		// if target is in between left and mid, create new mid on left half of array
-		// else create new mid on right half of array
-
-		int n = nums.length;
-
-		if(n<1){
+		if(nums==null || nums.length==0){
 			return -1;
 		}
 
-		if(n==1){
-			if(nums[0]==target){
-				return 0;
-			}else{
-				return -1;
-			}
-		}
-
+		int n = nums.length;
 		int left = 0;
 		int right = n-1;
 		int mid;
 
 		while(left<right){
 			mid = left + (right-left)/2;
-			
-			// what's a cleaner way of doing the next 10 lines?
+			if(nums[mid]>nums[right]){
+				left = mid+1;
+			}else{
+				right = mid;
+			}
+		}
+
+		int pivot = left;
+		left = 0;
+		right = n-1;
+
+		if(target>=nums[pivot] && target<=nums[right]){
+			left = pivot;
+		}else{
+			right = pivot;
+		}
+
+		while(left<=right){
+			mid = left + (right-left)/2;
 			if(nums[mid]==target){
 				return mid;
-			}
-
-			if(nums[left]==target){
-				return left;
-			}
-
-			if(nums[right]==target){
-				return right;
-			}
-
-			if(target>=nums[left] && target<=nums[mid]){
-				right = mid;
+			}else if(target<nums[mid]){
+				right = mid-1;
 			}else{
 				left = mid+1;
 			}
@@ -52,8 +44,8 @@ class SearchInRotatedSortedArray{
 
 	public static void main(String args[]){
 		
-		int[] nums = {4,5,6,7,0,1,2};
-		int target = 0;
+		int[] nums = {5,1,2,3,4};
+		int target = 1;
 
 		System.out.println(search(nums, target));
 	}
