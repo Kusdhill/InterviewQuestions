@@ -1,4 +1,4 @@
-class Fibonnacci{
+class Fibonacci{
 
 	public static int fibonnaci(int n){
 		if(n<=1){
