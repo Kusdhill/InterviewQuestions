@@ -1,5 +1,6 @@
 import java.util.Queue;
 import java.util.LinkedList;
+import java.util.Stack;
 
 class PlayWithTrees{
 
@@ -57,6 +58,45 @@ class PlayWithTrees{
 		}
 	}
 
+	public static class TreeBounds{
+		TreeNode node;
+		int lowBound;
+		int highBound;
+
+		TreeBounds(TreeNode node, int lowBound, int highBound){
+			this.node = node;
+			this.lowBound = lowBound;
+			this.highBound = highBound;
+		}
+	}
+
+	public static boolean isValidBinarySearchTree(TreeNode root){
+		if(root==null) return true;
+
+		Stack<TreeBounds> stack = new Stack<>();
+		stack.push(new TreeBounds(root, Integer.MIN_VALUE, Integer.MAX_VALUE));
+
+		while(stack.size()>0){
+			TreeBounds curBounds = stack.pop();
+			TreeNode curNode = curBounds.node;
+			int lowBound = curBounds.lowBound;
+			int highBound = curBounds.highBound;
+
+			if(curNode.value<lowBound || curNode.value>highBound) return false;
+
+			if(curNode.left!=null){
+				stack.push(new TreeBounds(curNode.left, lowBound, curNode.value));
+			}
+
+			if(curNode.right!=null){
+				stack.push(new TreeBounds(curNode.right, curNode.value, highBound));
+			}
+		}
+
+		return true;
+
+	}
+
 	public static void main(String[] args){
 		TreeNode root = new TreeNode(8);
 		TreeNode left = root.insertLeft(3);
@@ -73,6 +113,8 @@ class PlayWithTrees{
 		depthFirstTraversal(root);
 		System.out.println("Breadth first traversal");
 		breadthFirstTraversal(root);
+
+		System.out.println(isValidBinarySearchTree(root));
 
 		/*
 						8
