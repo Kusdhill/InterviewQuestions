@@ -97,6 +97,24 @@ class PlayWithTrees{
 
 	}
 
+	public static int findSecondLargest(TreeNode root){
+		if(root.right==null && root.left!=null) return findLargest(root.left);
+
+		if(root.right.right==null && root.right.left==null) return root.value;
+
+		return findSecondLargest(root.right);
+	}
+
+	public static int findLargest(TreeNode root){
+		TreeNode curNode = root;
+
+		while(true){
+			if(curNode.right==null) return curNode.value;
+
+			curNode = root.right;
+		}
+	}
+
 	public static void main(String[] args){
 		TreeNode root = new TreeNode(8);
 		TreeNode left = root.insertLeft(3);
@@ -115,6 +133,8 @@ class PlayWithTrees{
 		breadthFirstTraversal(root);
 
 		System.out.println(isValidBinarySearchTree(root));
+
+		System.out.println(findSecondLargest(root));
 
 		/*
 						8
