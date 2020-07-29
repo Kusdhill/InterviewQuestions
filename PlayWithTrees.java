@@ -98,11 +98,16 @@ class PlayWithTrees{
 	}
 
 	public static int findSecondLargest(TreeNode root){
-		if(root.right==null && root.left!=null) return findLargest(root.left);
 
-		if(root.right.right==null && root.right.left==null) return root.value;
+		TreeNode curNode = root;
 
-		return findSecondLargest(root.right);
+		while(true){
+			if(curNode.right==null && curNode.left!=null) return findLargest(curNode.left);
+
+			if(curNode.right.right==null && curNode.right.left==null) return curNode.value;
+
+			curNode = curNode.right;
+		}
 	}
 
 	public static int findLargest(TreeNode root){
